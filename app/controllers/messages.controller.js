@@ -11,13 +11,42 @@ exports.getAll = async (req, res)=>{
 };
 
 
+
+exports.getUserData = async (req, res)=>{
+  try{
+      const data = await Message.find({ status: false})
+      res.json(data);
+  } 
+  catch(error){
+      res.status(500).json({message: error.message})
+  }
+};
+
+
+exports.getConfirmedData = async (req, res)=>{
+  try{
+      const data = await Message.find({ status: true})
+      res.json(data);
+  } 
+  catch(error){
+      res.status(500).json({message: error.message})
+  }
+};
+
+
 exports.Approve = async (req, res)=>{
+
+  const id =req.params.id;
+
     try {
-        await Message.findByIdAndUpdate(req.params.id, {
-            status: req.body.status
-        });
-        // Send response in here
-        res.send('Item Updated!');
+        await Message.findByIdAndUpdate( id, req.body,{ useFindAndModify: false })
+        .then( data=>{
+          if(!data){
+            res.status(404).send({
+              message:'Not found'
+            });
+          } else res.send('Item Updated!');
+        })
 
       } catch(err) {
           console.error(err.message);
