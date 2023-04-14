@@ -59,6 +59,7 @@ exports.addMessages = async (req, res)=>{
     const SMS = new Message({
         message:  req.body.message,
         status: req.body.status,
+        confirmed: req.body.cofirmed
     });
 
    SMS.save(SMS)

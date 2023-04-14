@@ -4,7 +4,8 @@ const Message = mongoose.model(
   "Message",
   new mongoose.Schema({
     message: String,
-    status: Boolean
+    status: Boolean,
+    confirmed: String
   })
 );
 
