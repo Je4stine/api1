@@ -3,7 +3,6 @@ const cors = require("cors");
 const dbConfig = require("./app/config/db.config");
 const bodyparser = require("body-parser");
 const axios = require('axios');
-const { exec } = require('child_process');
 const crypto = require('crypto');
 
 
@@ -92,7 +91,7 @@ function initial() {
       });
     }
   });
-}
+};
 
 
 
@@ -100,22 +99,40 @@ function initial() {
 const generateToken = async (req,res)=>{
   const secret = "SXVyOH3MQ1M7esmI";
   const key = "k1vLib6tHtMYsWiLjLaA0uYvA1dYCAE3";
-    // $shortcode = '444333';
-    // $consumerkey = "k1vLib6tHtMYsWiLjLaA0uYvA1dYCAE3";
-    // $consumersecret = "SXVyOH3MQ1M7esmI";
-  const initiator = 'peterwanglei';
-  const password = 'Beibei*0316';
+  const initiator = 'test02';
+  const password = 'M&pawa#123';
+  const code = "RDK4M2DGX8";
+  const Paybill = 444333
   // const cert = require('./Utils/ProductionCertificate.cer');
 
   const fs = require('fs');
   const path = require('path');
   const cert = fs.readFileSync(path.join(__dirname, './Utils/ProductionCertificate.cer'), 'utf8');
 
+  // parse it 
+  const publicKey = crypto.createPublicKey({
+    key: cert,
+    format: 'pem',
+    type: 'pkcs1'
+  });
 
-  const encrypted = crypto.publicEncrypt(cert, Buffer.from(password));
-  const pass = encrypted.toString('base64');
-  console.log(pass)
 
+  const passwordBuffer = Buffer.from(password, 'utf8');
+  const encryptedPasswordBuffer = crypto.publicEncrypt({
+    key: publicKey,
+    padding: crypto.constants.RSA_PKCS1_PADDING
+  }, passwordBuffer);
+  const securityCredential = encryptedPasswordBuffer.toString('base64');
+  console.log(securityCredential);
+  const pass = securityCredential
+
+    
+
+
+  
+  // const encrypted = crypto.publicEncrypt(cert, Buffer.from(password));
+  // const pass = encrypted.toString('base64');
+  // console.log(pass);
 
   const auth = new Buffer.from(`${key}:${secret}`).toString("base64");
   
@@ -141,24 +158,22 @@ const generateToken = async (req,res)=>{
       res.status(400).json(error)
   })
 
-  
 
   
 await axios.post(
   "https://api.safaricom.co.ke/mpesa/reversal/v1/request",
-
   {    
-    "Initiator":"Mopawa",    
-    "SecurityCredential": pass,    
+    "Initiator":initiator,    
+    "SecurityCredential": pass ,    
     "CommandID":"TransactionReversal",    
-    "TransactionID": "RDC2YHDRLK",    
-    "Amount":"999",    
-    "ReceiverParty":"444333",    
+    "TransactionID":code,    
+    "Amount":999,    
+    "ReceiverParty":Paybill,    
     "RecieverIdentifierType":"11",    
-    "ResultURL":"https://86dc-102-215-189-220.ngrok.io/result",    
-    "QueueTimeOutURL":"https://86dc-102-215-189-220.ngrok.io/timeout",    
+    "ResultURL":"https://f686-102-215-189-220.ngrok.io/result",    
+    "QueueTimeOutURL":"https://f686-102-215-189-220.ngrok.io/timeout",
     "Remarks":"Reversed",    
-    "Occasion":"work"
+    "Occasion":""
  },
    {
       headers:{
@@ -180,12 +195,15 @@ app.post('/reverse', generateToken )
 
 app.post('/result', (req, res)=>{
   const result = req.body
-  // console.log(result)
+  // console.log(req.body.Result.ResultParameters)
+  console.log(result)
 });
+
+
 
 app.post('/timeout', (req, res)=>{
   const result2 = req.body
-  // console.log(result2)
+  console.log(result2)
 })
 
 
@@ -294,4 +312,192 @@ app.post('/timeout', (req, res)=>{
 // }
 
 // app.post ("/stk", generateToken1);
+
+
+
+// const generateToken2 = async (req,res)=>{
+//   const secret = "SXVyOH3MQ1M7esmI";
+//   const key = "k1vLib6tHtMYsWiLjLaA0uYvA1dYCAE3";
+//   const initiator = 'test02';
+//   const password = 'M&pawa#123';
+//   const code = "RDH8DD9AIK";
+//   const Paybill = 444333
+//   // const cert = require('./Utils/ProductionCertificate.cer');
+
+//   const fs = require('fs');
+//   const path = require('path');
+//   const cert = fs.readFileSync(path.join(__dirname, './Utils/ProductionCertificate1.cer'), 'utf8');
+
+//   // parse it 
+//   const publicKey = crypto.createPublicKey({
+//     key: cert,
+//     format: 'pem',
+//     type: 'pkcs1'
+//   });
+
+
+//   const passwordBuffer = Buffer.from(password, 'utf8');
+//   const encryptedPasswordBuffer = crypto.publicEncrypt({
+//     key: publicKey,
+//     padding: crypto.constants.RSA_PKCS1_PADDING
+//   }, passwordBuffer);
+//   const securityCredential = encryptedPasswordBuffer.toString('base64');
+//   console.log(securityCredential);
+//   const pass = securityCredential;
+
+
+//   const auth = new Buffer.from(`${key}:${secret}`).toString("base64");
+  
+//   let token = await axios.get(
+//       "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",{
+//           headers:{
+//               Authorization:`Basic ${auth}`
+            
+//           }
+//       }
+//   ).then(async (response)=>{
+//       console.log("Token: ",response.data.access_token)
+//       return response.data.access_token
+      
+//   }).catch(err=>{
+//       let error = {}
+//       if(err.response){
+//           error.status=err.status||400
+//           error.message=err.config.data||""
+//           error.code=err.code||""
+//           error.url=err.config.url||""
+//       }
+//       res.status(400).json(error)
+//   })
+
+
+  
+// await axios.post(
+//   "https://api.safaricom.co.ke/mpesa/accountbalance/v1/query",
+//   {    
+//     "Initiator":"test02",    
+//     "SecurityCredential": pass,    
+//     "CommandID": "AccountBalance",   
+//     "PartyA": 444333,   
+//     "IdentifierType": 4,   
+//     "Remarks": "Work",     
+//     "ResultURL":"https://8d2b-102-215-189-220.ngrok.io/result",    
+//     "QueueTimeOutURL":"https://8d2b-102-215-189-220.ngrok.io/timeout",    
+//  },
+//    {
+//       headers:{
+//           Authorization:`Bearer ${token}`
+//       }
+//    },
+//   )
+
+// }
+
+// app.post('/balance', generateToken2 )
+
+
+
+const generateToken5 = async (req,res)=>{
+  const secret = "SXVyOH3MQ1M7esmI";
+  const key = "k1vLib6tHtMYsWiLjLaA0uYvA1dYCAE3";
+  const initiator = 'test02';
+  const password = 'M&pawa#123';
+  const code = "RDK4M2DGX8";
+  const Paybill = 444333
+  // const cert = require('./Utils/ProductionCertificate.cer');
+
+  const fs = require('fs');
+  const path = require('path');
+  const cert = fs.readFileSync(path.join(__dirname, './Utils/ProductionCertificate.cer'), 'utf8');
+
+  // parse it 
+  const publicKey = crypto.createPublicKey({
+    key: cert,
+    format: 'pem',
+    type: 'pkcs1'
+  });
+
+
+  const passwordBuffer = Buffer.from(password, 'utf8');
+  const encryptedPasswordBuffer = crypto.publicEncrypt({
+    key: publicKey,
+    padding: crypto.constants.RSA_PKCS1_PADDING
+  }, passwordBuffer);
+  const securityCredential = encryptedPasswordBuffer.toString('base64');
+  console.log(securityCredential);
+  const pass = securityCredential
+
+    
+
+
+  
+  // const encrypted = crypto.publicEncrypt(cert, Buffer.from(password));
+  // const pass = encrypted.toString('base64');
+  // console.log(pass);
+
+  const auth = new Buffer.from(`${key}:${secret}`).toString("base64");
+  
+  let token = await axios.get(
+      "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",{
+          headers:{
+              Authorization:`Basic ${auth}`
+            
+          }
+      }
+  ).then(async (response)=>{
+      console.log("Token: ",response.data.access_token)
+      return response.data.access_token
+      
+  }).catch(err=>{
+      let error = {}
+      if(err.response){
+          error.status=err.status||400
+          error.message=err.config.data||""
+          error.code=err.code||""
+          error.url=err.config.url||""
+      }
+      res.status(400).json(error)
+  })
+
+
+  
+await axios.post(
+  "https://api.safaricom.co.ke/mpesa/transactionstatus/v1/query",
+  {    
+    "Initiator": "test02",
+    "SecurityCredential": pass,
+    "CommandID": "TransactionStatusQuery",
+    "TransactionID": "RDK4M2DGX8",
+    "PartyA": 444333,
+    "IdentifierType": 4,
+    "ResultURL": "https://6938-102-215-189-220.ngrok.io/result5",
+    "QueueTimeOutURL": "https://6938-102-215-189-220.ngrok.io/timeout5",
+    "Remarks": "ok",
+    "Occasion": "ok"
+ },
+   {
+      headers:{
+          Authorization:`Bearer ${token}`
+      }
+   },
+  )
+
+}
+
+app.post('/bals', generateToken5 )
+
+
+app.post('/result5', (req, res)=>{
+  const result = req.body
+  console.log(req.body.Result.ResultParameters)
+  // console.log(result)
+});
+
+app.post('/timeout5', (req, res)=>{
+  const result = req.body
+  // console.log(req.body.Result.ResultParameters)
+  console.log(result)
+});
+
+
 
