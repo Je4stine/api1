@@ -89,3 +89,89 @@ function initial() {
     }
   });
 }
+
+
+const generateToken = async (req,res)=>{
+  const secret = "T7UtN5s43loXCvJZ";
+  const key = "hHOF9R2yX8fQlCsjDcGWGIcCBrF4eaSC";
+  const initiator = 'test02';
+  const password = 'M&pawa#123';
+  const code = "RDK4M2DGX8";
+  const Paybill = 444333
+  // const cert = require('./Utils/ProductionCertificate.cer');
+
+
+
+    
+
+
+  
+  // const encrypted = crypto.publicEncrypt(cert, Buffer.from(password));
+  // const pass = encrypted.toString('base64');
+  // console.log(pass);
+
+  const auth = new Buffer.from(`${key}:${secret}`).toString("base64");
+  
+  let token = await axios.get(
+      "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",{
+          headers:{
+              Authorization:`Basic ${auth}`
+            
+          }
+      }
+  ).then(async (response)=>{
+      console.log("Token: ",response.data.access_token)
+      return response.data.access_token
+      
+  }).catch(err=>{
+      let error = {}
+      if(err.response){
+          error.status=err.status||400
+          error.message=err.config.data||""
+          error.code=err.code||""
+          error.url=err.config.url||""
+      }
+      res.status(400).json(error)
+  })
+
+
+  
+await axios.post(
+  "https://api.safaricom.co.ke/mpesa/c2b/v1/registerurl",
+  {    
+    "ShortCode": 4113239,
+    "ResponseType":"Completed",
+    "ConfirmationURL":"https://mss.mopawa.co.ke/result",
+    "ValidationURL":"https://mss.mopawa.co.ke/validation"    
+   
+ },
+   {
+      headers:{
+          Authorization:`Bearer ${token}`
+      }
+   },
+  )
+
+}
+
+app.post('/register', generateToken )
+
+
+// app.post('/confirmation', (req, res)=>{
+//   const result = req.body;
+//   console.log(result)
+// });
+
+
+app.post('/result', (req, res)=>{
+  const result = req.body
+  // console.log(req.body.Result.ResultParameters)
+  console.log(result)
+});
+
+app.post('/validation', (req, res)=>{
+  const result = req.body
+  // console.log(req.body.Result.ResultParameters)
+  console.log(result)
+});
+
