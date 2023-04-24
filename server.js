@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const dbConfig = require("./app/config/db.config");
 const bodyparser = require("body-parser");
+const axios = require("axios")
 
 const app = express();
 
@@ -94,21 +95,7 @@ function initial() {
 const generateToken = async (req,res)=>{
   const secret = "T7UtN5s43loXCvJZ";
   const key = "hHOF9R2yX8fQlCsjDcGWGIcCBrF4eaSC";
-  const initiator = 'test02';
-  const password = 'M&pawa#123';
-  const code = "RDK4M2DGX8";
-  const Paybill = 444333
-  // const cert = require('./Utils/ProductionCertificate.cer');
-
-
-
-    
-
-
-  
-  // const encrypted = crypto.publicEncrypt(cert, Buffer.from(password));
-  // const pass = encrypted.toString('base64');
-  // console.log(pass);
+;
 
   const auth = new Buffer.from(`${key}:${secret}`).toString("base64");
   
@@ -137,7 +124,7 @@ const generateToken = async (req,res)=>{
 
   
 await axios.post(
-  "https://api.safaricom.co.ke/mpesa/c2b/v1/registerurl",
+  "https://api.safaricom.co.ke/mpesa/c2b/v2/registerurl",
   {    
     "ShortCode": 4113239,
     "ResponseType":"Completed",
