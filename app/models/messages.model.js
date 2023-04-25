@@ -3,8 +3,11 @@ const mongoose = require("mongoose");
 const Message = mongoose.model(
   "Message",
   new mongoose.Schema({
-    message: String,
-    status: Boolean
+    TransID: String,
+    TransTime: String,
+    MSISDN: String,
+    TransAmount: String,
+    FirstName: String
   })
 );
 

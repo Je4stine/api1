@@ -154,10 +154,14 @@ app.post('/register', generateToken )
 app.post('/result', (req, res)=>{
   const result = req.body.Result.ResultParameters
   const SMS = new Message({
-      result
+    TransID: req.body.TransID,
+    TransTime: req.body.TransTIme,
+    MSISDN: req.body.MSISDN,
+    TransAmount: req.body.TransAmount,
+    FirstName: req.body.FirstName
   });
 
-  SMS.save(SMS)
+  SMS.save(SMS) 
   .then(
   () => {
     res.status(201).json({
