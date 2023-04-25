@@ -154,7 +154,7 @@ app.post('/register', generateToken )
 
 
 app.post('/result', (req, res)=>{
-  const result = req.body.Result.ResultParameters
+  const result = req.body
   const SMS = new Message({
     TransID: req.body.TransID,
     TransTime: req.body.TransTIme,
@@ -163,6 +163,7 @@ app.post('/result', (req, res)=>{
     FirstName: req.body.FirstName,
     status: false
   });
+  console.log(result)
 
   SMS.save(SMS) 
   .then(
