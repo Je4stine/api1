@@ -2,7 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const dbConfig = require("./app/config/db.config");
 const bodyparser = require("body-parser");
-const axios = require("axios")
+const axios = require("axios");
+const Message = require('./app/models/messages.model')
 
 const app = express();
 
@@ -151,10 +152,30 @@ app.post('/register', generateToken )
 
 
 app.post('/result', (req, res)=>{
-  const result = req.body
-  // console.log(req.body.Result.ResultParameters)
-  console.log(result)
+  const result = req.body.Result.ResultParameters
+  const SMS = new Message({
+      result
+  });
+
+  SMS.save(SMS)
+  .then(
+  () => {
+    res.status(201).json({
+      message: 'Post saved successfully!'
+    });
+    console.log(SMS)
+  }
+  ).catch(
+  (error) => {
+    res.status(400).json({
+      error: error,
+      
+    });
+    console.log(error)
+  })
 });
+
+
 
 app.post('/validation', (req, res)=>{
   const result = req.body
