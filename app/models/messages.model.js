@@ -7,7 +7,8 @@ const Message = mongoose.model(
     TransTime: String,
     MSISDN: String,
     TransAmount: String,
-    FirstName: String
+    FirstName: String,
+    status: Boolean
   })
 );
 

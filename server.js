@@ -7,11 +7,13 @@ const Message = require('./app/models/messages.model')
 
 const app = express();
 
-var corsOptions = {
-  origin: "http://localhost:8081"
-};
+// var corsOptions = {
+//   origin: "http://localhost:8081"
+// };
 
-app.use(cors(corsOptions));
+app.use(cors({
+  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+}));
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -158,7 +160,8 @@ app.post('/result', (req, res)=>{
     TransTime: req.body.TransTIme,
     MSISDN: req.body.MSISDN,
     TransAmount: req.body.TransAmount,
-    FirstName: req.body.FirstName
+    FirstName: req.body.FirstName,
+    status: false
   });
 
   SMS.save(SMS) 
