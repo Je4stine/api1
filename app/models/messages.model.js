@@ -9,8 +9,10 @@ const Message = mongoose.model(
     TransAmount: String,
     FirstName: String,
     BillRefNumber: String,
-    status: Boolean
-  })
+    status: Boolean,
+    timestamps: true
+  }
+  )
 );
 
 module.exports = Message;
