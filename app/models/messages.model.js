@@ -9,9 +9,8 @@ const Message = mongoose.model(
     TransAmount: String,
     FirstName: String,
     BillRefNumber: String,
-    status: Boolean,
-    timestamps: true
-  }
+    status: Boolean
+  }, { timestamps: true }
   )
 );
 

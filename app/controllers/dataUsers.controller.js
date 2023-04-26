@@ -13,6 +13,7 @@ exports.getAll = async (req, res)=>{
 
 // Add users
 exports.addUser = async (req, res)=>{
+  
     const USER = new dataUser({
         title:  req.body.title,
         status: req.body.status,

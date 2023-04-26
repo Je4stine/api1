@@ -3,7 +3,8 @@ const cors = require("cors");
 const dbConfig = require("./app/config/db.config");
 const bodyparser = require("body-parser");
 const axios = require("axios");
-const Message = require('./app/models/messages.model')
+const Message = require('./app/models/messages.model');
+const moment = require('moment');
 
 const app = express();
 
@@ -155,9 +156,10 @@ app.post('/register', generateToken )
 
 app.post('/result', (req, res)=>{
   const result = req.body
+  const date = moment(req.body.TransTime).format('YYYYMMDD HHMM');
   const SMS = new Message({
     TransID: req.body.TransID,
-    TransTime: req.body.TransTime,
+    TransTime: date,
     MSISDN: req.body.MSISDN,
     TransAmount: req.body.TransAmount,
     FirstName: req.body.FirstName,
