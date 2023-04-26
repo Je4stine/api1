@@ -8,6 +8,7 @@ const Message = mongoose.model(
     MSISDN: String,
     TransAmount: String,
     FirstName: String,
+    BillRefNumber: String,
     status: Boolean
   })
 );

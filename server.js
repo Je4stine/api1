@@ -157,10 +157,11 @@ app.post('/result', (req, res)=>{
   const result = req.body
   const SMS = new Message({
     TransID: req.body.TransID,
-    TransTime: req.body.TransTIme,
+    TransTime: req.body.TransTime,
     MSISDN: req.body.MSISDN,
     TransAmount: req.body.TransAmount,
     FirstName: req.body.FirstName,
+    BillRefNumber: req.body.BillRefNumber,
     status: false
   });
   console.log(result)
