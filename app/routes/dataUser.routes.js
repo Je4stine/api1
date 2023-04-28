@@ -12,4 +12,6 @@ module.exports = function(app) {
     app.get('/users', DataUsers.getAll);
 
     app.post( '/api/addUsers', DataUsers.addUser);
+
+    app.post ('/api/getUsers', DataUsers.getUsers)
 };

@@ -1,6 +1,6 @@
 const config = require("../config/auth.config");
 const db = require("../models");
-const User = db.user;
+const Other = db.other;
 const Role = db.role;
 
 
@@ -10,12 +10,12 @@ var bcrypt = require("bcrypt");
 
 exports.signup = async (req, res) => {
 
- 
 
-  const user = new User({
+  const user = new Other({
     username: req.body.username,
     email: req.body.email,
     password: (await bcrypt.hash(req.body.password,10)).toString(),
+    admin: req.body.admin
   });
 
   user.save((err, user) => {
@@ -47,7 +47,7 @@ exports.signup = async (req, res) => {
         }
       );
     } else {
-      Role.findOne({ name: "admin" }, (err, role) => {
+      Role.findOne({ name: "user" }, (err, role) => {
         if (err) {
           res.status(500).send({ message: err });
           return;
@@ -77,7 +77,7 @@ exports.signin = (req, res) => {
   const hashedPassword = bcrypt.hash(password, 10).toString();
 
   // Find the user in the database
-  User.findOne({
+  Other.findOne({
     username,
   })
     .populate("roles", "-__v")

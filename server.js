@@ -52,6 +52,7 @@ require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
 require('./app/routes/messages.routes')(app);
 require('./app/routes/dataUser.routes')(app);
+require('./app/routes/other.routes')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
@@ -156,10 +157,10 @@ app.post('/register', generateToken )
 
 app.post('/result', (req, res)=>{
   const result = req.body
-  const date = moment(req.body.TransTime).format('YYYYMMDD HHMM');
+  const formattedDate = moment(req.body.TransTime, 'YYYYMMDDHHmmss').format('MM/DD HH:mm');
   const SMS = new Message({
     TransID: req.body.TransID,
-    TransTime: date,
+    TransTime: formattedDate,
     MSISDN: req.body.MSISDN,
     TransAmount: req.body.TransAmount,
     FirstName: req.body.FirstName,

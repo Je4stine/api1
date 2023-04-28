@@ -1,4 +1,23 @@
 const dataUser = require("../models/dataUser");
+const users = require ("./../models/other.model");
+
+
+
+//find users by admin name
+
+exports.getUsers = async (req, res) => {
+  try {
+    const adminData = req.body.admin; // get the admin name from the route parameters
+
+    const user = await users.find({ admin: adminData}); // query user data based on the admin name
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 
 exports.getAll = async (req, res)=>{
     try{

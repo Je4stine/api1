@@ -17,6 +17,8 @@ module.exports = function(app) {
     app.get( '/api/userdata', Message.getUserData);
 
     app.get ( '/api/getConfirmed', Message.getConfirmedData);
+
+   
 };
 
 
