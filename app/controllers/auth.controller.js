@@ -73,10 +73,6 @@ exports.signin = (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  // Hash the password that the user entered
-  const hashedPassword = bcrypt.hash(password, 10).toString();
-
-  // Find the user in the database
   User.findOne({
     username,
   })
@@ -91,8 +87,8 @@ exports.signin = (req, res) => {
         return res.status(404).send({ message: "User Not found." });
       }
 
-      // Compare the hashed passwords
-      const passwordIsValid = bcrypt.compare(hashedPassword, user.password);
+      // Compare the hashed password with the user-entered password
+      const passwordIsValid = bcrypt.compareSync(password, user.password);
 
       if (!passwordIsValid) {
         return res.status(401).send({
@@ -115,4 +111,4 @@ exports.signin = (req, res) => {
         accessToken: token
       });
     });
-};
+};;
