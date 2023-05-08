@@ -8,16 +8,16 @@ exports.addImage = async (req, res)=>{
           return res.status(400).send('No image provided');
         }
     
-        const url = req.file.path;
+        const image = req.file.path;
         const { username } = req.body;
     
-        const image = new Images({
+        const images = new Images({
           username,
-          url,
+          image,
           originalName: req.file.originalname,
         });
     
-        await image.save();
+        await images.save();
     
         res.status(200).send('Image uploaded successfully');
       } catch (error) {
