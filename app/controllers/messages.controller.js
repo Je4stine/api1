@@ -54,6 +54,10 @@ exports.Approve = async (req, res)=>{
       }
 };
 
+exports.addImage = async (req, res )=>{
+  
+}
+
 
 exports.addMessages = async (req, res)=>{
     const SMS = new Message({

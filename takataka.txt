@@ -1,0 +1,57 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// Function to store the token in device storage
+const storeToken = async (token) => {
+  try {
+    await AsyncStorage.setItem('userToken', token);
+  } catch (e) {
+    // Handle error
+  }
+}
+
+// Function to retrieve the token from device storage
+const getToken = async () => {
+  try {
+    const token = await AsyncStorage.getItem('userToken');
+    return token;
+  } catch (e) {
+    // Handle error
+  }
+}
+
+// Function to remove the token from device storage
+const removeToken = async () => {
+  try {
+    await AsyncStorage.removeItem('userToken');
+  } catch (e) {
+    // Handle error
+  }
+}
+
+// Check if the token is present in storage
+const token = await getToken();
+if (token) {
+  // Send a request to the server to check if the token is still valid
+  fetch('https://example.com/check-token', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.valid) {
+      // Automatically log in the user using the stored token
+      // ...
+    } else {
+      // Token is invalid, remove it from storage
+      removeToken();
+    }
+  })
+  .catch(error => {
+    // Handle error
+  });
+} else {
+  // Prompt the user to log in
+  // ...
+}
