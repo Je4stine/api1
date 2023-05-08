@@ -5,7 +5,8 @@ const Role = mongoose.model(
   new mongoose.Schema({
     image: String,
     username: String,
-    originalName: String
+    originalName: String,
+    imageUrl: String
   })
 );
 
