@@ -30,6 +30,28 @@ exports.addImage = async (req, res) => {
     console.error(error);
     res.status(500).send('Error saving image');
   }
-};;
+};
 
+
+exports.getAll = async (req, res)=>{
+  try{
+      const data = await Images.find()
+      res.json(data);
+  } 
+  catch(error){
+      res.status(500).json({message: error.message})
+  }
+};
+
+
+exports.getOne = async (req, res)=>{
+  const theUser = req.body.username
+  try{
+      const data = await Images.find( {username: theUser})
+      res.json(data);
+  } 
+  catch(error){
+      res.status(500).json({message: error.message})
+  }
+};
 

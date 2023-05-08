@@ -25,6 +25,10 @@ module.exports = function(app) {
 
     app.post('/api/addImage',upload.single('image'), Images.addImage);
 
+    app.get('/api/getImages', Images.getAll);
+
+    app.post('/api/getOne', Images.getOne);
+
 };
 
  
