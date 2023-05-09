@@ -5,6 +5,7 @@ const bodyparser = require("body-parser");
 const axios = require("axios");
 const Message = require('./app/models/messages.model');
 const moment = require('moment');
+const path = require('path');
 
 const app = express();
 
@@ -16,11 +17,12 @@ app.use(cors({
   methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 }));
 
-// parse requests of content-type - application/json
 app.use(express.json());
 
-// parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('uploads'));
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 
