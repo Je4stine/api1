@@ -1,5 +1,5 @@
-const Images = require('../controllers/images.controller');
 const multer = require('multer');
+const ImageController = require('../controllers/images.controller')
 
 module.exports = function(app) {
     const storage = multer.diskStorage({
@@ -23,12 +23,9 @@ module.exports = function(app) {
         next();
       });
 
-    app.post('/api/addImage',upload.single('image'), Images.addImage);
+    app.put('/api/users/:username/image', upload.single("image"), ImageController.addImageByUsername);
 
-    app.get('/api/getImages', Images.getAll);
-
-    app.post('/api/getOne', Images.getOne);
-
+  
 };
 
  
