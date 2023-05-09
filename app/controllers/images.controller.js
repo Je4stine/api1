@@ -92,3 +92,15 @@ exports.addImageByUsername = async (req, res) => {
   }
 };
 
+
+
+exports.getUser = async (req, res)=>{
+  const theUser = req.body.username
+  try{
+      const data = await User.findOne( {username: theUser})
+      res.json(data);
+  } 
+  catch(error){
+      res.status(500).json({message: error.message})
+  }
+};

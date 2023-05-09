@@ -25,6 +25,8 @@ module.exports = function(app) {
 
     app.put('/api/users/:username/image', upload.single("image"), ImageController.addImageByUsername);
 
+    app.get('/api/getImg', ImageController.getUser);
+
   
 };
 
