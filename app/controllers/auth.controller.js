@@ -109,6 +109,7 @@ exports.signin = (req, res) => {
         email: user.email,
         roles: user.roles,
         imageUrl: user.imageUrl,
+        alias: user.alias,
         accessToken: token
       });
     });

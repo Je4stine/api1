@@ -124,7 +124,7 @@ const generateToken = async (req,res)=>{
       let error = {}
       if(err.response){
           error.status=err.status||400
-          error.message=err.config.data||""
+          error.message
           error.code=err.code||""
           error.url=err.config.url||""
       }
@@ -138,8 +138,8 @@ await axios.post(
   {    
     "ShortCode": 732195,
     "ResponseType":"Completed",
-    "ConfirmationURL":"https://www.mss.mopawa.co.ke/result",
-    "ValidationURL":"https://www.mss.mopawa.co.ke/validation"    
+    "ConfirmationURL":"https://dukes.mss.africa/result",
+    "ValidationURL":"https://dukes.mss.africa/validation"    
    
  },
    {
