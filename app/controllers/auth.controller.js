@@ -155,6 +155,26 @@ exports.changePassword = (req, res) => {
 };
 
 
+exports.ChangeName = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(id, req.body, { useFindAndModify: false });
+
+    if (!updatedUser) {
+      return res.status(404).send({
+        message: 'User not found'
+      });
+    }
+
+    res.send('Item Updated!');
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+};
+
+
 
 exports.changePassword = (req, res) => {
   const userId = req.body._id; // Assuming you have middleware to extract the authenticated user ID

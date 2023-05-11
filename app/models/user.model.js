@@ -9,6 +9,7 @@ const User = mongoose.model(
     image: String,
     originalName: String,
     imageUrl: String,
+    alias: String,
     roles: [
       {
         type: mongoose.Schema.Types.ObjectId,
