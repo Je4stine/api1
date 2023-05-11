@@ -147,7 +147,9 @@ await axios.post(
           Authorization:`Bearer ${token}`
       }
    },
-  )
+  );
+
+  res.status(200)
 
 }
 

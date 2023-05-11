@@ -112,4 +112,85 @@ exports.signin = (req, res) => {
         accessToken: token
       });
     });
-};;
+};
+
+
+exports.changePassword = (req, res) => {
+  const userId = req.userId; // Assuming you have middleware to extract the authenticated user ID
+  const { currentPassword, newPassword } = req.body;
+
+  User.findById(userId, (err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    if (!user) {
+      return res.status(404).send({ message: "User Not found." });
+    }
+
+    // Compare the current password with the user-entered password
+    const passwordIsValid = bcrypt.compareSync(currentPassword, user.password);
+
+    if (!passwordIsValid) {
+      return res.status(401).send({
+        message: "Invalid current password!",
+      });
+    }
+
+    // Generate a new hashed password
+    const hashedPassword = bcrypt.hashSync(newPassword, 10);
+
+    // Update the user's password
+    user.password = hashedPassword;
+    user.save((err) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+
+      res.status(200).send({ message: "Password updated successfully!" });
+    });
+  });
+};
+
+
+
+exports.changePassword = (req, res) => {
+  const userId = req.body._id; // Assuming you have middleware to extract the authenticated user ID
+  const { currentPassword, newPassword } = req.body;
+
+  User.findById(userId, (err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    if (!user) {
+      return res.status(404).send({ message: "User Not found." });
+    }
+
+    // Compare the current password with the user-entered password
+    const passwordIsValid = bcrypt.compareSync(currentPassword, user.password);
+
+    if (!passwordIsValid) {
+      return res.status(401).send({
+        message: "Invalid current password!",
+      });
+    }
+
+    // Generate a new hashed password
+    const hashedPassword = bcrypt.hashSync(newPassword, 10);
+
+    // Update the user's password
+    user.password = hashedPassword;
+    user.save((err) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+
+      res.status(200).send({ message: "Password updated successfully!" });
+    });
+  });
+};
