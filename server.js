@@ -103,8 +103,8 @@ function initial() {
 
 
 const generateToken = async (req,res)=>{
-  const secret = "T7UtN5s43loXCvJZ";
-  const key = "hHOF9R2yX8fQlCsjDcGWGIcCBrF4eaSC";
+  const secret = "vgKjvHcdRVwtZ6HO";
+  const key = "0VYkTdGtuKkmPdDaYqXivgHLqW6FRxpQ";
 ;
 
   const auth = new Buffer.from(`${key}:${secret}`).toString("base64");
@@ -136,10 +136,10 @@ const generateToken = async (req,res)=>{
 await axios.post(
   "https://api.safaricom.co.ke/mpesa/c2b/v2/registerurl",
   {    
-    "ShortCode": 4113239,
+    "ShortCode": 732195,
     "ResponseType":"Completed",
-    "ConfirmationURL":"https://mss.mopawa.co.ke/result",
-    "ValidationURL":"https://mss.mopawa.co.ke/validation"    
+    "ConfirmationURL":"https://www.mss.mopawa.co.ke/result",
+    "ValidationURL":"https://www.mss.mopawa.co.ke/validation"    
    
  },
    {
