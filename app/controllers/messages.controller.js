@@ -46,7 +46,6 @@ exports.getConfirmedData = async (req, res)=>{
     };
 
     res.json({
-      pagination,
       data,
     });
   } catch (error) {
