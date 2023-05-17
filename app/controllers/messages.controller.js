@@ -24,33 +24,13 @@ catch(error){
 
 
 exports.getConfirmedData = async (req, res)=>{
-  try {
-    const page = parseInt(req.query.page); // Current page number, default is 1
-    const limit = parseInt(req.query.limit); // Number of items per page, default is 10
-
-    const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
-
-    const data = await Message.find({ status: true })
-      .skip(startIndex)
-      .limit(limit);
-
-    const totalCount = await Message.countDocuments({ status: true });
-
-    const pagination = {
-      currentPage: page,
-      totalPages: Math.ceil(totalCount/limit),
-      totalCount: totalCount,
-      hasNextPage: endIndex < totalCount,
-      hasPreviousPage: startIndex > 0,
-    };
-
-    res.json({
-      data,
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+  try{
+    const data = await Message.find({ status: true})
+    res.json(data);
+} 
+catch(error){
+    res.status(500).json({message: error.message})
+}
 };
 
 
