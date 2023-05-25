@@ -6,6 +6,7 @@ const axios = require("axios");
 const Message = require('./app/models/messages.model');
 const moment = require('moment');
 const path = require('path');
+const crypto = require('crypto');
 
 const app = express();
 
