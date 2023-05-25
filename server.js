@@ -7,6 +7,7 @@ const Message = require('./app/models/messages.model');
 const moment = require('moment');
 const path = require('path');
 const crypto = require('crypto');
+const { Number } = require('util');
 
 const app = express();
 
@@ -210,8 +211,8 @@ app.post('/validation', (req, res)=>{
 
 const generateToken2 = async (req,res)=>{
   const amountString = req.body.amount; // Example value, replace with your desired value
-  const amountNumber = parseFloat(amountString);
-  const formattedAmount = amountNumber.toFixed(2);
+  const amountNumber = Number.parseFloat(amountString);
+  const formattedAmount = amountNumber.toFixed(0);
 
 
 
