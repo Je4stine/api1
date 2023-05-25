@@ -213,7 +213,8 @@ const generateToken2 = async (req,res)=>{
   const initiator = 'test02';
   const password = 'Beibei*0428';
   // const code = "REN982JKP5";
-  const code = req.body.code
+  const amount = req.body.amount;
+  const code = req.body.code;
   const Paybill = 4113239
   // const cert = require('./Utils/ProductionCertificate.cer');
 
@@ -280,7 +281,7 @@ const generateToken2 = async (req,res)=>{
         "SecurityCredential": pass,    
         "CommandID": "TransactionReversal",    
         "TransactionID": code,    
-        "Amount": 3,    
+        "Amount": amount,    
         "ReceiverParty": Paybill,    
         "RecieverIdentifierType": "11",    
         "ResultURL": "https://www.mss.mopawa.co.ke/reversalResults",    
