@@ -208,12 +208,18 @@ app.post('/validation', (req, res)=>{
 // Reversal API Starts here
 
 const generateToken2 = async (req,res)=>{
+  const amountString = req.body.amount; // Example value, replace with your desired value
+  const amountNumber = parseFloat(amountString);
+  const formattedAmount = amountNumber.toFixed(2);
+
+
+
   const secret = "T7UtN5s43loXCvJZ";
   const key = "hHOF9R2yX8fQlCsjDcGWGIcCBrF4eaSC";
   const initiator = 'test02';
   const password = 'Beibei*0428';
   // const code = "REN982JKP5";
-  const amount = req.body.amount;
+  const amount = formattedAmount;
   const code = req.body.code;
   const Paybill = 4113239
   // const cert = require('./Utils/ProductionCertificate.cer');
