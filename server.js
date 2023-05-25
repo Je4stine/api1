@@ -202,3 +202,97 @@ app.post('/validation', (req, res)=>{
   console.log(result)
 });
 
+
+
+
+// Reversal API Starts here
+
+const generateToken2 = async (req,res)=>{
+  const secret = "T7UtN5s43loXCvJZ";
+  const key = "hHOF9R2yX8fQlCsjDcGWGIcCBrF4eaSC";
+  const initiator = 'test02';
+  const password = 'Beibei*0428';
+  const code = "REN982JKP5";
+  const Paybill = 4113239
+  // const cert = require('./Utils/ProductionCertificate.cer');
+
+  const fs = require('fs');
+  const path = require('path');
+  const cert = fs.readFileSync(path.join(__dirname, './Utils/ProductionCertificate.cer'), 'utf8');
+
+  // parse it 
+  const publicKey = crypto.createPublicKey({
+    key: cert,
+    format: 'pem',
+    type: 'pkcs1'
+  });
+
+
+  const passwordBuffer = Buffer.from(password, 'utf8');
+  const encryptedPasswordBuffer = crypto.publicEncrypt({
+    key: publicKey,
+    padding: crypto.constants.RSA_PKCS1_PADDING
+  }, passwordBuffer);
+  const securityCredential = encryptedPasswordBuffer.toString('base64');
+  console.log(securityCredential);
+  const pass = securityCredential
+
+    
+
+
+  
+  // const encrypted = crypto.publicEncrypt(cert, Buffer.from(password));
+  // const pass = encrypted.toString('base64');
+  // console.log(pass);
+
+  const auth = new Buffer.from(`${key}:${secret}`).toString("base64");
+  
+  let token = await axios.get(
+      "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",{
+          headers:{
+              Authorization:`Basic ${auth}`
+            
+          }
+      }
+  ).then(async (response)=>{
+      console.log("Token: ",response.data.access_token)
+      return response.data.access_token
+      
+  }).catch(err=>{
+      let error = {}
+      if(err.response){
+          error.status=err.status||400
+          error.message=err.config.data||""
+          error.code=err.code||""
+          error.url=err.config.url||""
+      }
+      res.status(400).json(error)
+  })
+
+
+  
+await axios.post(
+  "https://api.safaricom.co.ke/mpesa/reversal/v1/request",
+  {    
+    "Initiator":initiator,    
+    "SecurityCredential": pass,    
+    "CommandID":"TransactionReversal",    
+    "TransactionID":code,    
+    "Amount":3,    
+    "ReceiverParty":Paybill,    
+    "RecieverIdentifierType":"11",    
+    "ResultURL":"https://ba37-102-215-189-220.ap.ngrok.io/result1",    
+    "QueueTimeOutURL":"https://ba37-102-215-189-220.ap.ngrok.io/timeout",
+    "Remarks":"Reversed",    
+    "Occasion":""
+ },
+   {
+      headers:{
+          Authorization:`Bearer ${token}`
+      }
+   },
+  )
+
+}
+
+app.post('/reverse', generateToken2 )
