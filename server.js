@@ -211,8 +211,8 @@ app.post('/validation', (req, res)=>{
 
 const generateToken2 = async (req,res)=>{
   const amountString = req.body.amount; // Example value, replace with your desired value
-  const amountNumber = Number.parseFloat(amountString);
-  const formattedAmount = amountNumber.toFixed(0);
+  const amountNumber = parseFloat(amountString);
+  const formattedAmount = toFixed(0);
 
 
 
