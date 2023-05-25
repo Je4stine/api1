@@ -212,7 +212,8 @@ const generateToken2 = async (req,res)=>{
   const key = "hHOF9R2yX8fQlCsjDcGWGIcCBrF4eaSC";
   const initiator = 'test02';
   const password = 'Beibei*0428';
-  const code = "REN982JKP5";
+  // const code = "REN982JKP5";
+  const code = req.body.code
   const Paybill = 4113239
   // const cert = require('./Utils/ProductionCertificate.cer');
 
@@ -271,28 +272,54 @@ const generateToken2 = async (req,res)=>{
 
 
   
-await axios.post(
-  "https://api.safaricom.co.ke/mpesa/reversal/v1/request",
-  {    
-    "Initiator":initiator,    
-    "SecurityCredential": pass,    
-    "CommandID":"TransactionReversal",    
-    "TransactionID":code,    
-    "Amount":3,    
-    "ReceiverParty":Paybill,    
-    "RecieverIdentifierType":"11",    
-    "ResultURL":"https://ba37-102-215-189-220.ap.ngrok.io/result1",    
-    "QueueTimeOutURL":"https://ba37-102-215-189-220.ap.ngrok.io/timeout",
-    "Remarks":"Reversed",    
-    "Occasion":""
- },
-   {
-      headers:{
-          Authorization:`Bearer ${token}`
-      }
-   },
-  )
+  try {
+    await axios.post(
+      "https://api.safaricom.co.ke/mpesa/reversal/v1/request",
+      {    
+        "Initiator": initiator,    
+        "SecurityCredential": pass,    
+        "CommandID": "TransactionReversal",    
+        "TransactionID": code,    
+        "Amount": 3,    
+        "ReceiverParty": Paybill,    
+        "RecieverIdentifierType": "11",    
+        "ResultURL": "https://www.mss.mopawa.co.ke/reversalResults",    
+        "QueueTimeOutURL": "https://www.mss.mopawa.co.ke/reversalTimeout",
+        "Remarks": "Reversed",    
+        "Occasion": ""
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      },
+    );
+
+    // Success response
+    res.status(200).json({ message: "Reversal request sent successfully." });
+  } catch (error) {
+    // Error response
+    let errorResponse = {};
+    if (error.response) {
+      errorResponse.status = error.status || 400;
+      errorResponse.message = error.config.data || "";
+      errorResponse.code = error.code || "";
+      errorResponse.url = error.config.url || "";
+    }
+    res.status(400).json(errorResponse);
+  }
 
 }
 
-app.post('/reverse', generateToken2 )
+app.post('/reverse', generateToken2);
+
+
+app.post('/reversalResults',(req, res)=>{
+    const reversal = req.body
+    console.log(reversal)
+} );
+
+app.post('/reversalTimeout', (req, res)=>{
+    const timeout = req.body
+    console.log(timeout)
+})
