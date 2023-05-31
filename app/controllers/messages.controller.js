@@ -14,7 +14,7 @@ exports.getAll = async (req, res)=>{
 
 exports.getUserData = async (req, res) => {
   try{
-    const data = await Message.find({ status: false})
+    const data = await Message.find({ status: false}).sort({ TransTime: 1 });
     res.json(data);
 } 
 catch(error){
@@ -25,7 +25,7 @@ catch(error){
 
 exports.getConfirmedData = async (req, res)=>{
   try{
-    const data = await Message.find({ status: true})
+    const data = await Message.find({ status: true}).sort({ TransTime: 1 });
     res.json(data);
 } 
 catch(error){
