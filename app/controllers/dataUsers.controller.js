@@ -9,7 +9,8 @@ exports.getAdminUsers = async (req, res) => {
   try {
     const username = req.body.username; // get the admin name from the route parameters
 
-    const user = await mainUsers.find({ username: { $regex: `.*${username}.*` } }); // query user data based on the admin name
+    const user = await mainUsers.find({ username: { $regex: `.*${username}.*` } }) 
+    .sort({ username: 1 }); 
 
     const filteredUser = user.filter(u => u.username !== username);
 
