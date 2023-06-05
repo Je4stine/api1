@@ -13,5 +13,7 @@ module.exports = function(app) {
 
     app.post( '/api/addUsers', DataUsers.addUser);
 
-    app.post ('/api/getUsers', DataUsers.getUsers)
+    app.post ('/api/getUsers', DataUsers.getUsers);
+
+    app.post ( '/api/adminUsers', DataUsers.getAdminUsers)
 };

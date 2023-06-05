@@ -1,13 +1,30 @@
 const dataUser = require("../models/dataUser");
 const users = require ("./../models/other.model");
+const mainUsers = require ('../models/user.model');
 
 
 
-//find users by admin name
+// find users for admin panel
+exports.getAdminUsers = async (req, res) => {
+  try {
+    const username = req.body.username; // get the admin name from the route parameters
+
+    const user = await mainUsers.find({ username: { $regex: `.*${username}.*` } }); // query user data based on the admin name
+
+    const filteredUser = user.filter(u => u.username !== username);
+
+    res.json(filteredUser);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+//find users by admin 
+
 
 exports.getUsers = async (req, res) => {
   try {
-    const adminData = req.body.admin; // get the admin name from the route parameters
+    const adminData = req.body.username; // get the admin name from the route parameters
 
     const user = await users.find({ admin: adminData}); // query user data based on the admin name
 
