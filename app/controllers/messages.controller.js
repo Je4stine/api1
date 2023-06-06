@@ -33,6 +33,16 @@ catch(error){
 }
 };
 
+exports.getReversedData = async (req, res)=>{
+  try{
+    const data = await Message.find({ reversed: true}).sort({ TransTime: 1 });
+    res.json(data);
+} 
+catch(error){
+    res.status(500).json({message: error.message})
+}
+};
+
 
 exports.Approve = async (req, res)=>{
 

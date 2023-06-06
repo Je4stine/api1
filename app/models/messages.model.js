@@ -10,7 +10,8 @@ const Message = mongoose.model(
     FirstName: String,
     BillRefNumber: String,
     status: Boolean,
-    confirmedBy: String
+    confirmedBy: String,
+    reversed: Boolean
   }, { timestamps: true }
   )
 );

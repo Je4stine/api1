@@ -14,9 +14,12 @@ module.exports = function(app) {
     app.put( '/api/approve/:id', Message.Approve);
 
     app.post( '/api/addSms', Message.addMessages);
+    
     app.get( '/api/userdata', Message.getUserData);
 
     app.get ( '/api/getConfirmed', Message.getConfirmedData);
+
+    app.get('/api/getReversed', Message.getReversedData)
 
    
 };
