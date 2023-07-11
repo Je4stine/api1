@@ -7,10 +7,21 @@ const Role = db.role;
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
 
+exports.getUsers = async (req, res)=>{
+  try{
+    const admins = await User.find({'roles':'644632633b06af5ff82af5f1'});
+    // 
+
+    res.json(admins);
+
+  }catch(error){
+    console.log(error);
+    res.status(401)
+  }
+}
+
 
 exports.signup = async (req, res) => {
-
- 
   const user = new User({
     username: req.body.username,
     email: req.body.email,

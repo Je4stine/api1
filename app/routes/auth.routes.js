@@ -24,4 +24,6 @@ module.exports = function(app) {
   app.post("/api/auth/changePassword", controller.changePassword);
 
   app.put("/api/auth/changeName/:id", controller.ChangeName);
+
+  app.get("/api/getAdmins", controller.getUsers);
 }; 
