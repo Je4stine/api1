@@ -20,6 +20,7 @@ const app = express();
 // }));
 
 app.use(cors({
+  origin: ["http://localhost:3030", "http://localhost:3000","https://www.dashboard.mopawa.co.ke"],
 
   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization']
