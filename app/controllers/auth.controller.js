@@ -57,6 +57,7 @@ exports.signup = async (req, res) => {
             }
 
             res.send({ message: "User was registered successfully!" });
+            res.header("Access-Control-Allow-Origin", "https://www.dashboard.mopawa.co.ke");
           });
         }
       );
@@ -165,6 +166,7 @@ exports.changePassword = (req, res) => {
       }
 
       res.status(200).send({ message: "Password updated successfully!" });
+      res.header("Access-Control-Allow-Origin", "https://www.dashboard.mopawa.co.ke");
     });
   });
 };
@@ -183,6 +185,7 @@ exports.ChangeName = async (req, res) => {
     }
 
     res.send('Item Updated!');
+    res.header("Access-Control-Allow-Origin", "https://www.dashboard.mopawa.co.ke");
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
@@ -226,6 +229,7 @@ exports.changePassword = (req, res) => {
       }
 
       res.status(200).send({ message: "Password updated successfully!" });
+      res.header("Access-Control-Allow-Origin", "https://www.dashboard.mopawa.co.ke");
     });
   });
 };
