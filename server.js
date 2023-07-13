@@ -15,9 +15,16 @@ const app = express();
 //   origin: "http://localhost:8081"
 // };
 
+// app.use(cors({
+//   methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+// }));
+
 app.use(cors({
-  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+  origin: "https://www.dashboard.mopawa.co.ke",
+  methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 
 app.use(express.json());
 
