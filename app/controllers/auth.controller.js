@@ -32,6 +32,8 @@ exports.signup = async (req, res) => {
     phone: req.body.phone,
   });
 
+  res.header("Access-Control-Allow-Origin", "https://www.dashboard.mopawa.co.ke");
+
   user.save((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -57,7 +59,6 @@ exports.signup = async (req, res) => {
             }
 
             res.send({ message: "User was registered successfully!" });
-            res.header("Access-Control-Allow-Origin", "https://www.dashboard.mopawa.co.ke");
           });
         }
       );
