@@ -26,6 +26,10 @@ exports.signup = async (req, res) => {
     username: req.body.username,
     email: req.body.email,
     password: (await bcrypt.hash(req.body.password,10)).toString(),
+    name: req.body.name,
+    shopName: req.body.shopName,
+    location: req.body.location,
+    phone: req.body.phone,
   });
 
   user.save((err, user) => {
