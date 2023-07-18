@@ -32,7 +32,12 @@ exports.signup = async (req, res) => {
     phone: req.body.phone,
   });
 
-  res.header("Access-Control-Allow-Origin", "https://www.dashboard.mopawa.co.ke");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+      res.setHeader(
+        "Access-Control-Allow-Methods",
+        "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+      );
+    
 
   user.save((err, user) => {
     if (err) {
