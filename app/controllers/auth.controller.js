@@ -22,6 +22,10 @@ exports.getUsers = async (req, res)=>{
 
 
 exports.signup = async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+   
+
   const user = new User({
     username: req.body.username,
     email: req.body.email,
@@ -32,12 +36,7 @@ exports.signup = async (req, res) => {
     phone: req.body.phone,
   });
 
-  res.setHeader("Access-Control-Allow-Origin", "*");
-      res.setHeader(
-        "Access-Control-Allow-Methods",
-        "OPTIONS, GET, POST, PUT, PATCH, DELETE"
-      );
-    
+
 
   user.save((err, user) => {
     if (err) {
