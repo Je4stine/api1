@@ -19,13 +19,13 @@ const app = express();
 //   methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 // }));
 
-// app.use(cors({
-//   origin: ["http://localhost:3030", "http://localhost:3000","https://www.dashboard.mopawa.co.ke"],
+app.use(cors({
+  origin: ["http://localhost:3030", "http://localhost:3000","https://www.dashboard.mopawa.co.ke"],
 
-//   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-//   allowedHeaders: ['Content-Type', 'Authorization']
-// }));
-app.use(cors());
+  methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+// app.use(cors());
 
 
 app.use(express.json());
