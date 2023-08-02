@@ -11,6 +11,7 @@ const Message = mongoose.model(
     BillRefNumber: String,
     status: Boolean,
     confirmedBy: String,
+    LastName:String,
     reversed: Boolean
   }, { timestamps: true }
   )

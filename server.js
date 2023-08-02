@@ -183,6 +183,7 @@ app.post('/result', (req, res)=>{
     TransAmount: req.body.TransAmount,
     FirstName: req.body.FirstName,
     BillRefNumber: req.body.BillRefNumber,
+    LastName: req.body.LastName,
     status: false
   });
   console.log(result)
