@@ -82,4 +82,27 @@ exports.getPaid = async(req, res)=>{
         })
     
     }
-}
+};
+
+
+exports.getOperation = async (req, res)=>{
+    try{
+        const result = await Cases.find({
+            $or: [
+                { Status: 'Informed' },
+                { Status: 'Unpaid' }
+              ]
+            
+          });
+
+          res.status(200).json({
+            message: 'Cases fetched successfully!',
+            data: result
+          });
+
+    }catch(error){
+        res.status(500).json({
+            message: error.message || "Some error occurred while getting the case."
+        })
+    }
+};

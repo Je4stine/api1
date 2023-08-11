@@ -13,4 +13,5 @@ module.exports = function(app) {
        app.put('/api/cases/:id', CaseController.addCourtDate);
        app.get('/api/cases/paid', CaseController.getPaid);
        app.get('/api/cases/unpaid', CaseController.getUnpaid);
+       app.get('/api/cases/informed', CaseController.getOperation);
   };

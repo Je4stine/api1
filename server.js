@@ -8,6 +8,7 @@ const moment = require('moment');
 const path = require('path');
 const crypto = require('crypto');
 const { Number } = require('util');
+const Cases = require ('./app/models/cases.model');
 
 const app = express();
 
@@ -188,6 +189,8 @@ app.post('/result', (req, res)=>{
     status: false
   });
   console.log(result)
+
+  // const payment = Cases.findOne({ Phone: MSISDN });
 
   SMS.save(SMS) 
   .then(
