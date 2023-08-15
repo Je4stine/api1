@@ -9,9 +9,10 @@ exports.addCase = async(req, res)=>{
             Time: req.body.Time,
             Location: req.body.Location,
             Phone: req.body.Phone,
-            IdNo: req.body.IdNO,
+            IdNo: req.body.IdNo,
             CourtDate: req.body.CourtDate,
             Status:'Unpaid',
+            instant: req.body.instant
         });
 
         const result = await newCase.save();

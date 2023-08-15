@@ -11,7 +11,8 @@ const Cases = mongoose.model(
     IdNo: String,
     CourtDate: String,
     Status:String,
-    instant: Boolean
+    instant: Boolean,
+    CourtLocation: String
   }, { timestamps: true }
   )
 );
