@@ -11,7 +11,7 @@ exports.addCase = async(req, res)=>{
             Phone: req.body.Phone,
             IdNo: req.body.IdNO,
             CourtDate: req.body.CourtDate,
-            Status:'Unpaid'
+            Status:'Unpaid',
         });
 
         const result = await newCase.save();
@@ -30,7 +30,7 @@ exports.addCase = async(req, res)=>{
 };
 
 
-exports.addCourtDate = async()=>{
+exports.addCourtDate = async(req, res)=>{
     const id = req.params.id;
 
     try{
@@ -106,3 +106,4 @@ exports.getOperation = async (req, res)=>{
         })
     }
 };
+

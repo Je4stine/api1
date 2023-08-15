@@ -10,7 +10,8 @@ const Cases = mongoose.model(
     Phone: String,
     IdNo: String,
     CourtDate: Boolean,
-    Status:String
+    Status:String,
+    instant: Boolean
   }, { timestamps: true }
   )
 );
