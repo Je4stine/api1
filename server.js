@@ -193,12 +193,6 @@ app.post('/result', (req, res)=>{
 
   const payment = Cases.findOne({ Phone: req.body.BillRefNumber })
   
-  if (payment) {
-    Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Status: 'Paid' } })
-    return res.status(200).json({ message: 'Payment updated' });
-  };
-  
-
 
   SMS.save(SMS) 
   .then(
@@ -209,6 +203,14 @@ app.post('/result', (req, res)=>{
     console.log(SMS)
   }
   )
+
+   if (payment) {
+    console.log(payment)
+    Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Status: 'Paid' } })
+    return res.status(200).json({ message: 'Payment updated' });
+  };
+  
+  console.log('sdfghjkljhgfdsasdfghj')
 
   // const payment = Cases.findOne({ Phone: req.body.BillRefNumber })
 
