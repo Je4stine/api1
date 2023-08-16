@@ -175,35 +175,23 @@ app.post('/register', generateToken )
 //   console.log(result)
 // });
 
+app.post('/result', async (req, res) => {
+  try {
+    const result = req.body;
+    const formattedDate = moment(req.body.TransTime, 'YYYYMMDDHHmmss').format('MM/DD HH:mm');
+    const SMS = new Message({
+      TransID: req.body.TransID,
+      TransTime: formattedDate,
+      MSISDN: req.body.MSISDN,
+      TransAmount: req.body.TransAmount,
+      FirstName: req.body.FirstName,
+      BillRefNumber: req.body.BillRefNumber,
+      LastName: req.body.LastName,
+      status: false
+    });
+    console.log(result);
 
-app.post('/result', async (req, res)=>{
-  const result = req.body
-  const formattedDate = moment(req.body.TransTime, 'YYYYMMDDHHmmss').format('MM/DD HH:mm');
-  const SMS = new Message({
-    TransID: req.body.TransID,
-    TransTime: formattedDate,
-    MSISDN: req.body.MSISDN,
-    TransAmount: req.body.TransAmount,
-    FirstName: req.body.FirstName,
-    BillRefNumber: req.body.BillRefNumber,
-    LastName: req.body.LastName,
-    status: false
-  });
-  console.log(result)
-  
-
-  await SMS.save()
- 
-  // .then(
-  // () => {
-  //   res.status(201).json({
-  //     message: 'Post saved successfully!'
-  //   });
-  //   console.log(SMS)
-  // }
-  // )
-
- 
+    await SMS.save();
 
     const databaseValue = await Cases.findOne({ Phone: req.body.BillRefNumber });
 
@@ -211,26 +199,23 @@ app.post('/result', async (req, res)=>{
       // Compare BillRefNumber from request with the one from the database
       if (req.body.BillRefNumber === databaseValue.BillRefNumber) {
         // Update the status in the database
-        await Cases.updateOne({ Phone: BillRefNumber }, { $set: { Status: 'Paid' } });
+        await Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Status: 'Paid' } });
       }
     }
 
     res.status(201).json({
       message: 'Post saved successfully!'
     });
- 
-    console.log(SMS)
-  
-  
-  .catch(
-  (error) => {
+
+    console.log(SMS);
+  } catch (error) {
     res.status(400).json({
-      error: error,
-      
+      error: error
     });
-    console.log(error)
-  })
+    console.log(error);
+  }
 });
+
 
 
 
