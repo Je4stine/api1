@@ -192,7 +192,13 @@ app.post('/result', (req, res)=>{
   console.log(result)
 
   const payment = Cases.findOne({ Phone: req.body.BillRefNumber })
-  console.log(payment)
+  
+  if (!payment) {
+    console.log('Not Found')
+    return res.status(404).json({ message: 'Payment not found' });
+  }
+
+
 
   SMS.save(SMS) 
   .then(
