@@ -201,15 +201,15 @@ app.post('/result', (req, res)=>{
   }
   )
 
-  const payment = Cases.findOne({ Phone: req.body.BillRefNumber })
+  // const payment = Cases.findOne({ Phone: req.body.BillRefNumber })
 
-  if (!payment) {
-    return res.status(404).json({ message: 'Payment not found' });
-  }
+  // if (!payment) {
+  //   return res.status(404).json({ message: 'Payment not found' });
+  // }
 
-  Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Status: 'Paid' } })
-  Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { ConfirmationCode: req.body.TransID } })
-  return res.status(200).json({ message: 'Payment notification processed' })
+  // Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Status: 'Paid' } })
+  // Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { ConfirmationCode: req.body.TransID } })
+  // return res.status(200).json({ message: 'Payment notification processed' })
   
   .catch(
   (error) => {
