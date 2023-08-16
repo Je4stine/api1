@@ -194,7 +194,7 @@ app.post('/result', async (req, res) => {
     await SMS.save();
 
     const databaseValue = await Cases.findOne({ Phone: req.body.BillRefNumber });
-    console.log(databaseValue.BillRefNumber)
+   
 
     if (databaseValue) {
   
