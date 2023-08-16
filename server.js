@@ -9,6 +9,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { Number } = require('util');
 const Cases = require ('./app/models/cases.model');
+const Rev = require ( './app/models/Reversal.model');
 
 const app = express();
 
@@ -190,8 +191,6 @@ app.post('/result', (req, res)=>{
   });
   console.log(result)
 
-  // const payment = Cases.findOne({ Phone: MSISDN });
-
   SMS.save(SMS) 
   .then(
   () => {
@@ -200,7 +199,19 @@ app.post('/result', (req, res)=>{
     });
     console.log(SMS)
   }
-  ).catch(
+  )
+
+  const payment = Cases.findOne({ Phone: req.body.BillRefNumber })
+
+  if (!payment) {
+    return res.status(404).json({ message: 'Payment not found' });
+  }
+
+  Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Status: 'Paid' } })
+  Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { ConfirmationCode: req.body.TransID } })
+  return res.status(200).json({ message: 'Payment notification processed' })
+  
+  .catch(
   (error) => {
     res.status(400).json({
       error: error,
