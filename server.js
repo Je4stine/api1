@@ -199,7 +199,7 @@ app.post('/result', (req, res)=>{
   };
 
   Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Status: 'Paid' } })
-  return res.status(200).json({ message: 'Payment notification processed' })
+  
 
 
   SMS.save(SMS) 
