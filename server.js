@@ -233,7 +233,7 @@ const generateToken2 = async (req,res)=>{
   const secret = "T7UtN5s43loXCvJZ";
   const key = "hHOF9R2yX8fQlCsjDcGWGIcCBrF4eaSC";
   const initiator = 'test02';
-  const password = 'Beibei*0428';
+  const password = 'Beibei*0726';
   // const code = "REN982JKP5";
   const amount = formattedAmount;
   const code = req.body.code;
