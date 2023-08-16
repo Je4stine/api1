@@ -196,8 +196,10 @@ app.post('/result', (req, res)=>{
   if (!payment) {
     console.log('Not Found')
     return res.status(404).json({ message: 'Payment not found' });
-  }
+  };
 
+  Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Status: 'Paid' } })
+  return res.status(200).json({ message: 'Payment notification processed' })
 
 
   SMS.save(SMS) 
