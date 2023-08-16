@@ -196,13 +196,9 @@ app.post('/result', async (req, res) => {
     const databaseValue = await Cases.findOne({ Phone: req.body.BillRefNumber });
    
 
-    if (databaseValue) {
   
-      if (req.body.BillRefNumber === databaseValue.BillRefNumber) {
-        // Update the status in the database
-        await Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Status: 'Paid' } });
-      }
-    }
+    await Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Status: 'Paid' } });
+     
 
     res.status(201).json({
       message: 'Post saved successfully!'
