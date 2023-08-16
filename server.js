@@ -176,7 +176,7 @@ app.post('/register', generateToken )
 // });
 
 
-app.post('/result', (req, res)=>{
+app.post('/result', async (req, res)=>{
   const result = req.body
   const formattedDate = moment(req.body.TransTime, 'YYYYMMDDHHmmss').format('MM/DD HH:mm');
   const SMS = new Message({
@@ -190,38 +190,37 @@ app.post('/result', (req, res)=>{
     status: false
   });
   console.log(result)
-
-  const payment = Cases.findOne({ Phone: req.body.BillRefNumber })
   
 
-  SMS.save(SMS) 
-  .then(
-  () => {
+  await SMS.save()
+ 
+  // .then(
+  // () => {
+  //   res.status(201).json({
+  //     message: 'Post saved successfully!'
+  //   });
+  //   console.log(SMS)
+  // }
+  // )
+
+ 
+
+    const databaseValue = await Cases.findOne({ Phone: req.body.BillRefNumber });
+
+    if (databaseValue) {
+      // Compare BillRefNumber from request with the one from the database
+      if (req.body.BillRefNumber === databaseValue.BillRefNumber) {
+        // Update the status in the database
+        await Cases.updateOne({ Phone: BillRefNumber }, { $set: { Status: 'Paid' } });
+      }
+    }
+
     res.status(201).json({
       message: 'Post saved successfully!'
     });
-    console.log(SMS)
-  }
-  )
-
-   if (payment) {
-    console.log(payment)
-    Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Status: 'Paid' } })
-    return res.status(200).json({ message: 'Payment updated' });
-  };
-  
-  console.log('sdfghjkljhgfdsasdfghj')
-
-  // const payment = Cases.findOne({ Phone: req.body.BillRefNumber })
-
  
-  // if (!payment) {
-  //   return res.status(404).json({ message: 'Payment not found' });
-  // }
-
-  // Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Status: 'Paid' } })
-  // Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { ConfirmationCode: req.body.TransID } })
-  // return res.status(200).json({ message: 'Payment notification processed' })
+    console.log(SMS)
+  
   
   .catch(
   (error) => {
