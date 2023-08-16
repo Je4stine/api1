@@ -194,9 +194,10 @@ app.post('/result', async (req, res) => {
     await SMS.save();
 
     const databaseValue = await Cases.findOne({ Phone: req.body.BillRefNumber });
+    console.log(databaseValue.BillRefNumber)
 
     if (databaseValue) {
-      // Compare BillRefNumber from request with the one from the database
+  
       if (req.body.BillRefNumber === databaseValue.BillRefNumber) {
         // Update the status in the database
         await Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Status: 'Paid' } });
