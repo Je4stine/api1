@@ -191,6 +191,9 @@ app.post('/result', (req, res)=>{
   });
   console.log(result)
 
+  const payment = Cases.findOne({ Phone: req.body.BillRefNumber })
+  console.log(payment)
+
   SMS.save(SMS) 
   .then(
   () => {
@@ -203,6 +206,7 @@ app.post('/result', (req, res)=>{
 
   // const payment = Cases.findOne({ Phone: req.body.BillRefNumber })
 
+ 
   // if (!payment) {
   //   return res.status(404).json({ message: 'Payment not found' });
   // }
