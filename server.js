@@ -193,12 +193,10 @@ app.post('/result', (req, res)=>{
 
   const payment = Cases.findOne({ Phone: req.body.BillRefNumber })
   
-  if (!payment) {
-    console.log('Not Found')
-    return res.status(404).json({ message: 'Payment not found' });
+  if (payment) {
+    Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Status: 'Paid' } })
+    return res.status(200).json({ message: 'Payment updated' });
   };
-
-  Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Status: 'Paid' } })
   
 
 
