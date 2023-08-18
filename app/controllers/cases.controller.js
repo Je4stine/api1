@@ -108,3 +108,17 @@ exports.getOperation = async (req, res)=>{
     }
 };
 
+exports.getCourtDates = async(req, res)=>{
+    try{
+        const result = await Cases.find({ CourtDate: { $ne: "" } });
+        res.status(200).json({
+             result
+          });
+}
+    catch(error){
+        res.status(500).json({
+            message: error.message || "Some error occurred while getting the case."
+        })
+    }
+};
+
