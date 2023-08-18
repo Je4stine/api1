@@ -195,9 +195,9 @@ app.post('/result', async (req, res) => {
 
     const databaseValue = await Cases.findOne({ Phone: req.body.BillRefNumber });
    
-
-  
     await Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Status: 'Paid' } });
+    await Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { ConfirmationCode : req.body.TransID } });
+    await Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Amount : req.body.TransAmount } });
      
 
     res.status(201).json({
