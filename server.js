@@ -193,11 +193,11 @@ app.post('/result', async (req, res) => {
 
     await SMS.save();
 
-    const databaseValue = await Cases.findOne({ Phone: req.body.BillRefNumber });
+    const databaseValue = await Cases.findOne({ IdNo: req.body.BillRefNumber });
    
-    await Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Status: 'Paid' } });
-    await Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { ConfirmationCode : req.body.TransID } });
-    await Cases.updateOne({ Phone: req.body.BillRefNumber }, { $set: { Amount: req.body.TransAmount } });
+    await Cases.updateOne({ IdNo: req.body.BillRefNumber }, { $set: { Status: 'Paid' } });
+    await Cases.updateOne({ IdNo: req.body.BillRefNumber }, { $set: { ConfirmationCode : req.body.TransID } });
+    await Cases.updateOne({ IdNo: req.body.BillRefNumber }, { $set: { Amount: req.body.TransAmount } });
      
 
     res.status(201).json({
