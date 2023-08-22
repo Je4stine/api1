@@ -71,7 +71,8 @@ exports.getUnpaid = async(req, res)=>{
 
 exports.getPaid = async(req, res)=>{
     try{
-        const result = await Cases.find({Status: 'Paid'});
+        // const result = await Cases.find({Status: 'Paid'});
+        const result = await Cases.find({ Status: 'Paid', instant: { $ne: true } });
         res.status(200).json({
             message: 'Cases fetched successfully!',
             data: result
