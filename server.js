@@ -200,7 +200,7 @@ app.post('/result', async (req, res) => {
     // await Cases.updateOne({ IdNo: req.body.BillRefNumber }, { $set: { Amount: req.body.TransAmount } });
  
 
-  if (databaseValue && databaseValue.Amount === req.body.BillRefNumber) {
+  if (databaseValue && databaseValue.Amount === req.body.TransAmount) {
       await Cases.updateOne({ IdNo: req.body.BillRefNumber }, { 
           $set: { 
               Status: 'Paid',
