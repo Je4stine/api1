@@ -195,10 +195,25 @@ app.post('/result', async (req, res) => {
 
     const databaseValue = await Cases.findOne({ IdNo: req.body.BillRefNumber });
    
-    await Cases.updateOne({ IdNo: req.body.BillRefNumber }, { $set: { Status: 'Paid' } });
-    await Cases.updateOne({ IdNo: req.body.BillRefNumber }, { $set: { ConfirmationCode : req.body.TransID } });
-    await Cases.updateOne({ IdNo: req.body.BillRefNumber }, { $set: { Amount: req.body.TransAmount } });
-     
+    // await Cases.updateOne({ IdNo: req.body.BillRefNumber }, { $set: { Status: 'Paid' } });
+    // await Cases.updateOne({ IdNo: req.body.BillRefNumber }, { $set: { ConfirmationCode : req.body.TransID } });
+    // await Cases.updateOne({ IdNo: req.body.BillRefNumber }, { $set: { Amount: req.body.TransAmount } });
+ 
+
+  if (databaseValue && databaseValue.Amount === req.body.BillRefNumber) {
+      await Cases.updateOne({ IdNo: req.body.BillRefNumber }, { 
+          $set: { 
+              Status: 'Paid',
+              ConfirmationCode: req.body.TransID,
+              Amount: req.body.TransAmount
+          } 
+      });
+    } else {
+        res.status(500).json({
+          message: "Internal server errro"
+    })
+    }
+      
 
     res.status(201).json({
       message: 'Post saved successfully!'
