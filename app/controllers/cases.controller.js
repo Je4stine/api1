@@ -12,7 +12,8 @@ exports.addCase = async(req, res)=>{
             IdNo: req.body.IdNo,
             CourtDate: req.body.CourtDate,
             Status:'Unpaid',
-            instant: req.body.instant
+            instant: req.body.instant,
+            Amount: req.body.Amount
         });
 
         const result = await newCase.save();
