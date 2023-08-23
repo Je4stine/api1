@@ -209,8 +209,12 @@ app.post('/result', async (req, res) => {
           } 
       });
     } else {
-        res.status(500).json({
-          message: "Internal server errro"
+      await Cases.updateOne({ IdNo: req.body.BillRefNumber }, { 
+        $set: { 
+            Status: 'Pending',
+            ConfirmationCode: req.body.TransID,
+            Amount: req.body.TransAmount
+        } 
     })
     }
       
