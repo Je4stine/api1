@@ -213,7 +213,7 @@ app.post('/result', async (req, res) => {
         $set: { 
             Status: 'Pending',
             ConfirmationCode: req.body.TransID,
-            Amount: req.body.TransAmount
+            Paid: req.body.TransAmount
         } 
     })
     }

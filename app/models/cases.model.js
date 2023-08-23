@@ -14,7 +14,8 @@ const Cases = mongoose.model(
     instant: Boolean,
     CourtLocation: String,
     ConfirmationCode: String,
-    Amount: String
+    Amount: String,
+    Paid: String
   }, { timestamps: true }
   )
 );
