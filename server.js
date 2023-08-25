@@ -217,6 +217,22 @@ app.post('/result', async (req, res) => {
         } 
     })
     }
+
+
+    const paymentDetails = {
+      TransID: req.body.TransID,
+      TransTime: formattedDate,
+      MSISDN: req.body.MSISDN,
+      TransAmount: req.body.TransAmount,
+      FirstName: req.body.FirstName,
+      BillRefNumber: req.body.BillRefNumber,
+      LastName: req.body.LastName,
+      status: false
+    };
+
+    const response = await axios.post('https://www.chapcash.mopawa.co.ke/paymentDetails', paymentDetails);
+    console.log(response)
+
       
 
     res.status(201).json({
