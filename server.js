@@ -13,6 +13,9 @@ const Rev = require ( './app/models/Reversal.model');
 
 const app = express();
 
+var allowedOrigins = [
+  'http://localhost:3030', 'http://localhost:3000','https://www.dashboard.mopawa.co.ke'];
+
 // var corsOptions = {
 //   origin: "http://localhost:8081"
 // };
@@ -21,13 +24,27 @@ const app = express();
 //   methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 // }));
 
-app.use(cors({
-  origin: ["http://localhost:3030", "http://localhost:3000","https://www.dashboard.mopawa.co.ke"],
+// app.use(cors({
+//   origin: ["http://localhost:3030", "http://localhost:3000","https://www.dashboard.mopawa.co.ke"],
 
-  methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+//   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+//   allowedHeaders: ['Content-Type', 'Authorization']
+// }));
 // app.use(cors());
+
+app.use(cors({
+  origin: function(origin, callback){
+    // allow requests with no origin 
+    // (like mobile apps or curl requests)
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      var msg = 'The CORS policy for this site does not ' +
+                'allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 
 app.use(express.json());
@@ -345,8 +362,8 @@ const generateToken2 = async (req,res)=>{
         "Amount": amount,    
         "ReceiverParty": Paybill,    
         "RecieverIdentifierType": "11",    
-        "ResultURL": "https://www.mss.mopawa.co.ke/reversalResults",    
-        "QueueTimeOutURL": "https://www.mss.mopawa.co.ke/reversalTimeout",
+        "ResultURL": "http://cb45-102-215-189-220.ngrok.io/reversalResults",    
+        "QueueTimeOutURL": "http://cb45-102-215-189-220.ngrok.io/reversalTimeout",
         "Remarks": "Reversed",    
         "Occasion": ""
       },
